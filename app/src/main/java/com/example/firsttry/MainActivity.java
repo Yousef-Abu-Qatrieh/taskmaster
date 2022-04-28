@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: Called-The App Is Visible");
+        setUsername();
     }
 
     @Override
@@ -92,17 +95,25 @@ public class MainActivity extends AppCompatActivity {
     }
     public void navigateToTaskDetailPage(){
         studyButton.setOnClickListener(view -> {
-            Intent goToTaskPage=new Intent(this,TaskDetailsPage.class);
-            startActivity(goToTaskPage);
+            Intent studyTaskPage=new Intent(this, TaskDetails.class);
+            studyTaskPage.putExtra("nameOfPage" , studyButton.getText().toString());
+            startActivity(studyTaskPage);
         });
         codeButton.setOnClickListener(view -> {
-            Intent goToTaskPage=new Intent(this,TaskDetailsPage.class);
-            startActivity(goToTaskPage);
+            Intent codeTaskPage=new Intent(this, TaskDetails.class);
+            codeTaskPage.putExtra("nameOfPage" , codeButton.getText().toString());
+            startActivity(codeTaskPage);
         });
         workoutButton.setOnClickListener(view -> {
-            Intent goToTaskPage=new Intent(this,TaskDetailsPage.class);
-            startActivity(goToTaskPage);
+            Intent workoutTaskPage=new Intent(this, TaskDetails.class);
+            workoutTaskPage.putExtra("nameOfPage" , workoutButton.getText().toString());
+            startActivity(workoutTaskPage);
         });
+
+    }
+    public void setUsername(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        changeTitle.setText(sharedPreferences.getString("username" ,"My") + " TasksList");
     }
     public void navigateToSettings(){
         Intent goSettingIntent = new Intent(this ,SettingPage.class);

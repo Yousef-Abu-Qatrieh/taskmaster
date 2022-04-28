@@ -39,12 +39,12 @@
 
     <TextView
         android:id="@+id/myTaskTitle"
-        android:layout_width="140dp"
-        android:layout_height="0dp"
+        android:layout_width="355dp"
+        android:layout_height="45dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="80dp"
         android:text="@string/my_tasksMain"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <!--lap26-->
