@@ -9,5 +9,14 @@
     <string name="task_DescriptionEdit">Do Something</string>
     <string name="submit_ButtonAddTask">Add Task</string>
     <string name="total_taskCounter">Total Task :</string>
+    <string name="buttonTask1Study">Study</string>
+    <string name="buttonTask2Code">Code</string>
+    <string name="buttonTask3Workout">workout</string>
+    <string name="action_settings">Setting</string>
+    <string name="usernameSettingEditText">usernameSettingEditText</string>
+    <string name="username">username</string>
+    <string name="saveButtonSetting">save</string>
+    <string name="title_taskDet">Title</string>
+    <string name="desc_lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
 
 </resources>

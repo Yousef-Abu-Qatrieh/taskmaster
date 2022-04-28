@@ -19,43 +19,73 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/myTaskTitle"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@android:drawable/ic_menu_gallery" />
+    <!--lap26-->
+    <!--    <Button-->
+    <!--        android:id="@+id/addSingleTask"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="40dp"-->
+    <!--        android:layout_marginBottom="156dp"-->
+    <!--        android:text="@string/add_taskMainButton"-->
 
-    <Button
-        android:id="@+id/addSingleTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="156dp"
-        android:text="@string/add_taskMainButton"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="1.0" />
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView2"-->
+    <!--        app:layout_constraintVertical_bias="1.0" />-->
 
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="140dp"
-        android:layout_height="0dp"
+        android:id="@+id/myTaskTitle"
+        android:layout_width="355dp"
+        android:layout_height="45dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="80dp"
         android:text="@string/my_tasksMain"
-        android:textSize="30dp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <!--lap26-->
+    <!--    <Button-->
+    <!--        android:id="@+id/allTasksButton"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="56dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:text="@string/all_taskMainButton"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/imageView"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
 
     <Button
-        android:id="@+id/allTasksButton"
+        android:id="@+id/buttonTask1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/all_taskMainButton"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/buttonTask1Study"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/buttonTask2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/buttonTask2Code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/buttonTask3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="272dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/buttonTask3Workout"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
