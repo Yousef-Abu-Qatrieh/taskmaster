@@ -10,5 +10,9 @@ Add Task Page
 
 All Task Page    
 
-![AllTask](https://user-images.githubusercontent.com/97651232/165224489-b1d3c8a4-3e3e-428d-b2eb-4711a2ea812e.png)    
+![AllTask](https://user-images.githubusercontent.com/97651232/165224489-b1d3c8a4-3e3e-428d-b2eb-4711a2ea812e.png)
+
+Main Page With 3 Buttons
+
+![Main lab 27](https://user-images.githubusercontent.com/97651232/165657489-80b9c426-b673-4d1f-bccd-01aeb474d880.png)
   
