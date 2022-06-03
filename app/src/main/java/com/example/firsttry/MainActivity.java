@@ -27,23 +27,37 @@ public class MainActivity extends AppCompatActivity {
     private Button codeButton;
     private Button workoutButton;
 List<Task> task=new ArrayList<>();
-
+//lap 28
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialiseActivity();
         // get the recycler view object
+        //lap29
+        List<Task> addTask=AppDatabase.getInstance(this).taskDao().getAll();
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         // create an adapter
-        CustomRecyclerView customRecyclerView = new CustomRecyclerView(task,position -> {
-            Toast.makeText(
-                    MainActivity.this,
-                    "The item clicked => " + task.get(position).getBody(), Toast.LENGTH_SHORT).show();
+//        CustomRecyclerView customRecyclerView = new CustomRecyclerView(task,position -> {
+//            Toast.makeText(
+//                    MainActivity.this,
+//                    "The item clicked => " + task.get(position).getBody(), Toast.LENGTH_SHORT).show();
+//
+//
+//            startActivity(new Intent(getApplicationContext(), TaskDetails.class));
 
-            startActivity(new Intent(getApplicationContext(), TaskDetails.class));
-        });
+            CustomRecyclerView customRecyclerView = new CustomRecyclerView(addTask, new CustomRecyclerView.CustomClickListener() {
+                @Override
+                public void onWeatherItemClicked(int position) {
+
+                        Intent taskDetailActivity = new Intent(getApplicationContext() , TaskDetails.class);
+                        taskDetailActivity.putExtra("id" ,  addTask.get(position).getId().toString());
+                        startActivity(taskDetailActivity);
+
+                }
+            } );
+
 
         // set adapter on recycler view
         recyclerView.setAdapter(customRecyclerView);
@@ -51,6 +65,15 @@ List<Task> task=new ArrayList<>();
         // set other important properties
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // lap 29
+        Button addbtn=findViewById(R.id.addBtn);
+        addbtn.setOnClickListener((v)->{
+            Intent intent=new Intent(getApplicationContext(),AddTask.class);
+
+
+            startActivity(intent);
+        });
+
 
 
         // lab 26
@@ -96,6 +119,7 @@ List<Task> task=new ArrayList<>();
     protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: Called-The App Is Visible");
+
 //        setUsername();
     }
 
@@ -122,16 +146,16 @@ List<Task> task=new ArrayList<>();
         return true;
     }
 // lab27
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.action_settings:
-//                navigateToSettings();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                navigateToSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 //    public void navigateToTaskDetailPage(){
 //        studyButton.setOnClickListener(view -> {
 //            Intent studyTaskPage=new Intent(this, TaskDetails.class);
@@ -154,8 +178,8 @@ List<Task> task=new ArrayList<>();
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        changeTitle.setText(sharedPreferences.getString("username" ,"My") + " TasksList");
 //    }
-//    public void navigateToSettings(){
-//        Intent goSettingIntent = new Intent(this ,SettingPage.class);
-//        startActivity(goSettingIntent);
-//    }
+    public void navigateToSettings(){
+        Intent goSettingIntent = new Intent(this ,SettingPage.class);
+        startActivity(goSettingIntent);
+    }
 }
