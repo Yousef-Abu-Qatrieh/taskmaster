@@ -1,6 +1,7 @@
 package com.example.firsttry;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import android.content.Context;
@@ -44,10 +45,22 @@ public class ExampleInstrumentedTest {
 
 
         onView(withId(R.id.addBtn)).perform(click());
-        onView(withId(R.id.TaskTitle)).perform(typeText("Task8"), closeSoftKeyboard());
-        onView(withId(R.id.taskDescription)).perform(typeText("skyDiving"), closeSoftKeyboard());
-        onView(withId(R.id.editTextStat)).perform(typeText("assigned"), closeSoftKeyboard());
+        onView(withId(R.id.TaskTitle)).perform(typeText("Task10"), closeSoftKeyboard());
+        onView(withId(R.id.taskDescription)).perform(typeText("smoking"), closeSoftKeyboard());
+         //lap29
+        // onView(withId(R.id.editTextStat)).perform(typeText("new"), closeSoftKeyboard());
         onView(withId(R.id.submitButtonTask)).perform(click());
 
+    }
+
+    @Test
+    public void testRecyclerView(){
+        onView(withId(R.id.recycler_view)).perform(click());
+    }
+
+
+    @Test
+    public void testCheckTaskTitle(){
+        onView(withId(R.id.AddTaskSinglePage)).equals("Add Task");
     }
 }
