@@ -16,7 +16,7 @@ public class Task {
     public Task(String title, String body, String state) {
         this.title = title;
         this.body = body;
-//     setState(state);
+     setState(state);
     }
 
     public Integer getId() {
@@ -47,25 +47,25 @@ public class Task {
         return state;
     }
 
-//    public void setState(String state) {
-//        switch (state) {
-//            case "new":
-//                this.state = state;
-//                break;
-//            case "assigned" :
-//                this.state = state;
-//                break;
-//            case "in progress" :
-//                this.state=state;
-//                break;
-//            case "complete":
-//                this.state=state;
-//                break;
-//            default:
-//                Log.i("Warning", "Invalid Input ");
-//                break;
-//        }
-//    }
+    public void setState(String state) {
+        switch (state) {
+            case "new":
+                this.state = state;
+                break;
+            case "assigned" :
+                this.state = state;
+                break;
+            case "in progress" :
+                this.state=state;
+                break;
+            case "complete":
+                this.state=state;
+                break;
+            default:
+                Log.i("Warning", "Invalid Input ");
+                break;
+        }
+    }
 
 
 }

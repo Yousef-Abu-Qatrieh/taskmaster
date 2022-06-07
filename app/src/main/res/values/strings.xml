@@ -22,4 +22,16 @@
     <string name="description" />
     <string name="complete" />
 
+
+    <string-array name="stateSpinnerItem">
+        <item>new</item>
+        <item>assigned</item>
+        <item>in progress</item>
+        <item>complete</item>
+
+    </string-array>
+
+
+
+
 </resources>
