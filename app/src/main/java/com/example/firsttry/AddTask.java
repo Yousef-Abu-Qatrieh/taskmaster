@@ -6,7 +6,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,8 @@ import com.amplifyframework.datastore.generated.model.Task;
 public class AddTask extends AppCompatActivity {
     int counter = 0;
     ProgressBar progressBar;
+    String teamId ="";
+    SharedPreferences sharedPreferences ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +36,14 @@ public class AddTask extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("TaskMaster");
         actionBar.setDisplayShowHomeEnabled(true);
+         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         actionBar.setDisplayHomeAsUpEnabled(true);
         EditText editText1 = findViewById(R.id.TaskTitle);
         EditText editText2 = findViewById(R.id.taskDescription);
         progressBar = findViewById(R.id.progress_task);
         //lap 31
         Spinner state = findViewById(R.id.stateSpinner);
+        teamId = sharedPreferences.getString("teamId","null");
 //        lap29
 //        EditText editText3=findViewById(R.id.editTextStat);
         Button button = findViewById(R.id.submitButtonTask);
@@ -66,7 +72,10 @@ public class AddTask extends AppCompatActivity {
                 .title(title)
                 .body(description)
                 .status(status)
+                .teamTaskId(teamId)
                 .build();
+
+
         Amplify.API.query(ModelMutation.create(task), res -> {
 runOnUiThread(new Runnable() {
     @Override

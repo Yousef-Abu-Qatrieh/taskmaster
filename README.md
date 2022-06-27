@@ -37,3 +37,8 @@ Ensure that the description and status of a tapped taskRoom are also displayed o
 
 Espresso
 add more test and polish the application.
+GraphQl lab 32
+![](./screenshots/img.png)
+RelatedData 33
+![](./screenshots/33.png)
+
