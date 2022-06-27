@@ -31,7 +31,13 @@
 
     </string-array>
 
+    <string-array name="team">
+        <item>java</item>
+        <item>Python</item>
+        <item>C++</item>
 
+
+    </string-array>
 
 
 </resources>
