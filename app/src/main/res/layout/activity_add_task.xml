@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".AddTask">
 
+  <ProgressBar
+    android:id="@+id/progress_task"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+      android:visibility="invisible">
+
+  </ProgressBar>
+
   <TextView
       android:id="@+id/AddTaskSinglePage"
       android:layout_width="183dp"
@@ -60,7 +72,7 @@
 <!--      android:layout_width="347dp"-->
 <!--      android:layout_height="62dp"-->
 <!--      android:ems="10"-->
-<!--      android:hint="Give Status for your task"-->
+<!--      android:hint="Give Status for your taskRoom"-->
 <!--      android:inputType="textPersonName"-->
 <!--      android:text=""-->
 <!--      app:layout_constraintBottom_toTopOf="@+id/submitButtonTask"-->

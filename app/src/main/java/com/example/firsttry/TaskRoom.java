@@ -6,14 +6,14 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Task {
+public class TaskRoom {
     @PrimaryKey(autoGenerate = true)
     private Integer id;
     private String title;
     private String body;
     private String state;
 
-    public Task(String title, String body, String state) {
+    public TaskRoom(String title, String body, String state) {
         this.title = title;
         this.body = body;
      setState(state);

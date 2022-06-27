@@ -1,20 +1,29 @@
 package com.example.firsttry;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.generated.model.Task;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +35,25 @@ public class MainActivity extends AppCompatActivity {
     private Button studyButton;
     private Button codeButton;
     private Button workoutButton;
-List<Task> task=new ArrayList<>();
+    private ProgressBar progressBar;
+List<TaskRoom> taskRoom =new ArrayList<>();
+List<Task> taskAws=new ArrayList<>();
+    CustomRecyclerView customRecyclerView;
 //lap 28
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialiseActivity();
+        configureAmplify();
         // get the recycler view object
         //lap29
-        List<Task> addTask=AppDatabase.getInstance(this).taskDao().getAll();
+
+
+        List<TaskRoom> addTaskRoom =AppDatabase.getInstance(this).taskDao().getAll();
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        progressBar=findViewById(R.id.progress_main);
+
 
         // create an adapter
 //        CustomRecyclerView customRecyclerView = new CustomRecyclerView(task,position -> {
@@ -47,12 +64,13 @@ List<Task> task=new ArrayList<>();
 //
 //            startActivity(new Intent(getApplicationContext(), TaskDetails.class));
 
-            CustomRecyclerView customRecyclerView = new CustomRecyclerView(addTask, new CustomRecyclerView.CustomClickListener() {
+             customRecyclerView = new CustomRecyclerView(taskAws, new CustomRecyclerView.CustomClickListener() {
                 @Override
                 public void onWeatherItemClicked(int position) {
+                    Gson gson  = new Gson();
 
                         Intent taskDetailActivity = new Intent(getApplicationContext() , TaskDetails.class);
-                        taskDetailActivity.putExtra("id" ,  addTask.get(position).getId().toString());
+                        taskDetailActivity.putExtra("task" ,gson.toJson(taskAws.get(position)));
                         startActivity(taskDetailActivity);
 
                 }
@@ -96,14 +114,14 @@ List<Task> task=new ArrayList<>();
 
     }
     private void initialiseActivity() {
-        task.add(new Task("Task 1", "Climbing", "new"));
-        task.add(new Task("Task 2", "Diving", "assigned"));
-        task.add(new Task("Task 3", "Cleaning", "in progress"));
-        task.add(new Task("Task 4", "Cooking", "in progress"));
-        task.add(new Task("Task 5", "Swimming", "complete"));
-        task.add(new Task("Task 6", "Studying", "complete"));
-        task.add(new Task("Task 7", "Dancing", "new"));
-        task.add(new Task("Task 8", "Bowling", "new"));
+        taskRoom.add(new TaskRoom("Task 1", "Climbing", "new"));
+        taskRoom.add(new TaskRoom("Task 2", "Diving", "assigned"));
+        taskRoom.add(new TaskRoom("Task 3", "Cleaning", "in progress"));
+        taskRoom.add(new TaskRoom("Task 4", "Cooking", "in progress"));
+        taskRoom.add(new TaskRoom("Task 5", "Swimming", "complete"));
+        taskRoom.add(new TaskRoom("Task 6", "Studying", "complete"));
+        taskRoom.add(new TaskRoom("Task 7", "Dancing", "new"));
+        taskRoom.add(new TaskRoom("Task 8", "Bowling", "new"));
 
     }
 
@@ -118,6 +136,9 @@ List<Task> task=new ArrayList<>();
     @Override
     protected void onResume() {
         super.onResume();
+        progressBar.setVisibility(View.VISIBLE);
+        fetchData();
+
         Log.i(TAG, "onResume: Called-The App Is Visible");
 
 //        setUsername();
@@ -181,5 +202,33 @@ List<Task> task=new ArrayList<>();
     public void navigateToSettings(){
         Intent goSettingIntent = new Intent(this ,SettingPage.class);
         startActivity(goSettingIntent);
+    }
+    private void configureAmplify() {
+        try {
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSDataStorePlugin());
+            Amplify.configure(getApplicationContext());
+
+            Log.i(TAG, "Initialized Amplify");
+        } catch (AmplifyException e) {
+            Log.e(TAG, "Could not initialize Amplify", e);
+        }
+    }
+    public void fetchData(){
+        taskAws.clear();
+        Amplify.API.query(ModelQuery.list(Task.class),res->{
+            if (res.hasData()){
+                for (Task t:res.getData()){
+                    taskAws.add(t);
+                }
+
+                runOnUiThread(()->{
+                    customRecyclerView.notifyDataSetChanged();
+                    progressBar.setVisibility(View.INVISIBLE);
+                });
+            }
+        },err->{
+
+        });
     }
 }

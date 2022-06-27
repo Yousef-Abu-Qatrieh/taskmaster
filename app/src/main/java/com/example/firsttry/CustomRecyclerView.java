@@ -8,13 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.Task;
+
 import java.util.List;
 
 public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.CustomViewHolder> {
     List<Task> dataList;
     CustomClickListener listener;
 
-    public CustomRecyclerView(List<Task> dataList,CustomClickListener listener) {
+    public CustomRecyclerView(List<Task> dataList, CustomClickListener listener) {
         this.dataList = dataList;
         this.listener=listener;
     }
@@ -31,7 +33,7 @@ public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 holder.taskTitle.setText(dataList.get(position).getTitle());
 holder.taskBody.setText(dataList.get(position).getBody());
-holder.taskStatus.setText(dataList.get(position).getState());
+holder.taskStatus.setText(dataList.get(position).getStatus());
     }
 
     @Override

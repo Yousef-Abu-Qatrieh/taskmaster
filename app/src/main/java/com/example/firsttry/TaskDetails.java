@@ -7,11 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.amplifyframework.datastore.generated.model.Task;
+import com.google.gson.Gson;
+
 public class TaskDetails extends AppCompatActivity {
     TextView textView;
-    Task task;
+    TaskRoom taskRoom;
     TextView taskDescription;
     TextView taskStatus;
+    Task task ;
 
 
     @Override
@@ -25,14 +29,17 @@ public class TaskDetails extends AppCompatActivity {
         textView = findViewById(R.id.titleTaskDetail);
         taskDescription = findViewById(R.id.descTaskDetails);
         taskStatus = findViewById(R.id.taskSts);
-
-
         Intent intent = getIntent();
+Gson gson = new Gson();
+task=gson.fromJson(intent.getStringExtra("task"),Task.class
+);
+
+
         textView.setText(intent.getStringExtra("nameOfPage"));
-        task = AppDatabase.getInstance(getApplicationContext()).taskDao().getTaskById(Integer.valueOf(intent.getStringExtra("id")));
+//        taskRoom = AppDatabase.getInstance(getApplicationContext()).taskDao().getTaskById(Integer.valueOf(intent.getStringExtra("id")));
         textView.setText(task.getTitle());
         taskDescription.setText(task.getBody());
-        taskStatus.setText(task.getState());
+        taskStatus.setText(task.getStatus());
 
 
     }
