@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,10 +21,12 @@ import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -36,19 +40,22 @@ public class MainActivity extends AppCompatActivity {
     private Button codeButton;
     private Button workoutButton;
     private ProgressBar progressBar;
+    String teamId ="";
 List<TaskRoom> taskRoom =new ArrayList<>();
 List<Task> taskAws=new ArrayList<>();
     CustomRecyclerView customRecyclerView;
-//lap 28
+    SharedPreferences sharedPreferences;
+    //lap 28
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialiseActivity();
         configureAmplify();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        getTeameName();
         // get the recycler view object
         //lap29
-
 
         List<TaskRoom> addTaskRoom =AppDatabase.getInstance(this).taskDao().getAll();
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -113,6 +120,11 @@ List<Task> taskAws=new ArrayList<>();
 //        navigateToTaskDetailPage();
 
     }
+
+    private void getTeameName() {
+       teamId= sharedPreferences.getString("teamId","teamName");
+    }
+
     private void initialiseActivity() {
         taskRoom.add(new TaskRoom("Task 1", "Climbing", "new"));
         taskRoom.add(new TaskRoom("Task 2", "Diving", "assigned"));
@@ -195,10 +207,10 @@ List<Task> taskAws=new ArrayList<>();
 //        });
 //
 //    }
-//    public void setUsername(){
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        changeTitle.setText(sharedPreferences.getString("username" ,"My") + " TasksList");
-//    }
+    public void setUsername(){
+
+        changeTitle.setText(sharedPreferences.getString("username" ,"My") + " TasksList");
+    }
     public void navigateToSettings(){
         Intent goSettingIntent = new Intent(this ,SettingPage.class);
         startActivity(goSettingIntent);
@@ -216,7 +228,7 @@ List<Task> taskAws=new ArrayList<>();
     }
     public void fetchData(){
         taskAws.clear();
-        Amplify.API.query(ModelQuery.list(Task.class),res->{
+        Amplify.API.query(ModelQuery.list(Task.class,Team.ID.eq(teamId)),res->{
             if (res.hasData()){
                 for (Task t:res.getData()){
                     taskAws.add(t);
