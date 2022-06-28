@@ -36,3 +36,7 @@ Ensure that the description and status of a tapped taskRoom are also displayed o
 
 Espresso
 add more test and polish the application.
+
+Publish TaskMaster build apk for your app    
+![](./screenshots/recycler%20in%20amplify.jpg)    
+![](./screenshots/tasldetails.jpg)   
