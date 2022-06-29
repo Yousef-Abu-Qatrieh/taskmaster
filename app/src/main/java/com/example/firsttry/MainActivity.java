@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,10 +21,12 @@ import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -36,19 +40,23 @@ public class MainActivity extends AppCompatActivity {
     private Button codeButton;
     private Button workoutButton;
     private ProgressBar progressBar;
-List<TaskRoom> taskRoom =new ArrayList<>();
-List<Task> taskAws=new ArrayList<>();
+    String teamId ="";
+    List<TaskRoom> taskRoom =new ArrayList<>();
+    List<Task> taskAws=new ArrayList<>();
     CustomRecyclerView customRecyclerView;
-//lap 28
+    SharedPreferences sharedPreferences;
+    //lap 28
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialiseActivity();
         configureAmplify();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        teamId=sharedPreferences.getString("teamId",null);
+        getTeameName();
         // get the recycler view object
         //lap29
-
 
         List<TaskRoom> addTaskRoom =AppDatabase.getInstance(this).taskDao().getAll();
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -64,17 +72,17 @@ List<Task> taskAws=new ArrayList<>();
 //
 //            startActivity(new Intent(getApplicationContext(), TaskDetails.class));
 
-             customRecyclerView = new CustomRecyclerView(taskAws, new CustomRecyclerView.CustomClickListener() {
-                @Override
-                public void onWeatherItemClicked(int position) {
-                    Gson gson  = new Gson();
+        customRecyclerView = new CustomRecyclerView(taskAws, new CustomRecyclerView.CustomClickListener() {
+            @Override
+            public void onWeatherItemClicked(int position) {
+                Gson gson  = new Gson();
 
-                        Intent taskDetailActivity = new Intent(getApplicationContext() , TaskDetails.class);
-                        taskDetailActivity.putExtra("task" ,gson.toJson(taskAws.get(position)));
-                        startActivity(taskDetailActivity);
+                Intent taskDetailActivity = new Intent(getApplicationContext() , TaskDetails.class);
+                taskDetailActivity.putExtra("task" ,gson.toJson(taskAws.get(position)));
+                startActivity(taskDetailActivity);
 
-                }
-            } );
+            }
+        } );
 
 
         // set adapter on recycler view
@@ -94,6 +102,8 @@ List<Task> taskAws=new ArrayList<>();
 
 
 
+
+
         // lab 26
 //        Button addAllTask= findViewById(R.id.allTasksButton);
 //        addAllTask.setOnClickListener(view -> {
@@ -105,7 +115,7 @@ List<Task> taskAws=new ArrayList<>();
 //            Intent allTaskPage = new Intent(this, AddTask.class);
 //            startActivity(allTaskPage);
 //        });
-      //  lab27
+        //  lab27
 //        changeTitle=findViewById(R.id.myTaskTitle);
 //        studyButton=findViewById(R.id.buttonTask1);
 //        codeButton=findViewById(R.id.buttonTask2);
@@ -113,6 +123,11 @@ List<Task> taskAws=new ArrayList<>();
 //        navigateToTaskDetailPage();
 
     }
+
+    private void getTeameName() {
+        teamId= sharedPreferences.getString("teamId","teamName");
+    }
+
     private void initialiseActivity() {
         taskRoom.add(new TaskRoom("Task 1", "Climbing", "new"));
         taskRoom.add(new TaskRoom("Task 2", "Diving", "assigned"));
@@ -166,7 +181,7 @@ List<Task> taskAws=new ArrayList<>();
         getMenuInflater().inflate(R.menu.main , menu);
         return true;
     }
-// lab27
+    // lab27
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -177,7 +192,7 @@ List<Task> taskAws=new ArrayList<>();
                 return super.onOptionsItemSelected(item);
         }
     }
-//    public void navigateToTaskDetailPage(){
+    //    public void navigateToTaskDetailPage(){
 //        studyButton.setOnClickListener(view -> {
 //            Intent studyTaskPage=new Intent(this, TaskDetails.class);
 //            studyTaskPage.putExtra("nameOfPage" , studyButton.getText().toString());
@@ -195,10 +210,10 @@ List<Task> taskAws=new ArrayList<>();
 //        });
 //
 //    }
-//    public void setUsername(){
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        changeTitle.setText(sharedPreferences.getString("username" ,"My") + " TasksList");
-//    }
+    public void setUsername(){
+
+        changeTitle.setText(sharedPreferences.getString("username" ,"My") + " TasksList");
+    }
     public void navigateToSettings(){
         Intent goSettingIntent = new Intent(this ,SettingPage.class);
         startActivity(goSettingIntent);
@@ -216,7 +231,8 @@ List<Task> taskAws=new ArrayList<>();
     }
     public void fetchData(){
         taskAws.clear();
-        Amplify.API.query(ModelQuery.list(Task.class),res->{
+        Amplify.API.query(ModelQuery.list(Task.class,Task.TEAM_TASK_ID.eq(teamId)),res->{
+            System.out.println(teamId+"sdaadsasdasd");
             if (res.hasData()){
                 for (Task t:res.getData()){
                     taskAws.add(t);
