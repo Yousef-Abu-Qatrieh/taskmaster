@@ -16,7 +16,6 @@ Main Page With 3 Buttons
 
 ![Main lab 27](https://user-images.githubusercontent.com/97651232/165657489-80b9c426-b673-4d1f-bccd-01aeb474d880.png)
   
-
 RecyclerView
 
 ![RecyclerView](https://user-images.githubusercontent.com/97651232/171005569-8f4f4dea-8038-4250-a8e4-0cd34ee873e8.png)
@@ -38,13 +37,13 @@ Ensure that the description and status of a tapped taskRoom are also displayed o
 Espresso
 add more test and polish the application.
 
-
-GraphQl lab 32
-![](./screenshots/img.png)
-RelatedData 33
-![](./screenshots/33.png)
-
 Publish TaskMaster build apk for your app    
 ![](./screenshots/recycler%20in%20amplify.jpg)    
 ![](./screenshots/tasldetails.jpg)   
 
+Cognito 
+
+     
+![](./screenshots/login.jpg)   
+![](./screenshots/sign%20up.jpg)
+![](./screenshots/verification.jpg)   
