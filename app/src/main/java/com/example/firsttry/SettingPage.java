@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,10 +22,10 @@ import com.amplifyframework.datastore.generated.model.Team;
 
 public class SettingPage extends AppCompatActivity {
     private static final String USERNAME="username";
-private EditText mUsername;
-   private Button mSaveButton;
-   Spinner spinner;
-   String teamId = "";
+    private EditText mUsername;
+    private Button mSaveButton;
+    Spinner spinner;
+    String teamId = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ private EditText mUsername;
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle("TaskMaster");
         spinner=findViewById(R.id.team_sp)
-;        mUsername=findViewById(R.id.username);
+        ;        mUsername=findViewById(R.id.username);
         mSaveButton=findViewById(R.id.btn_save);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -50,7 +51,14 @@ private EditText mUsername;
             SharedPreferences.Editor  preferencesEditor = sharedPreferences.edit();
             preferencesEditor.putString("teamId",teamId);
             preferencesEditor.apply();
-            finish();
+            new AlertDialog.Builder(this).
+                    setMessage("Success")
+                    .setTitle("Change Team Success")
+                    .setPositiveButton("Ok", (dialog, witch) -> {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }).show();
+
             System.out.println(teamId+"test++++++++++");
         });
     }
@@ -74,15 +82,17 @@ private EditText mUsername;
         Amplify.API.query(ModelQuery.list(Team.class,Team.NAME.eq(spinner.getSelectedItem().toString())),res->{
 
 
-                for(Team t :res.getData()){
-          if (res.hasData()) {
-             teamId=t.getId();
-          }
+            for(Team t :res.getData()){
+                if (res.hasData()) {
+                    teamId=t.getId();
                 }
+            }
 
 
         },err->{
 
         });
+
+
     }
 }

@@ -26,8 +26,8 @@ import com.amplifyframework.datastore.generated.model.Task;
 public class AddTask extends AppCompatActivity {
     int counter = 0;
     ProgressBar progressBar;
-    String teamId ="";
     SharedPreferences sharedPreferences ;
+    String teamId= "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +36,15 @@ public class AddTask extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("TaskMaster");
         actionBar.setDisplayShowHomeEnabled(true);
-         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         actionBar.setDisplayHomeAsUpEnabled(true);
         EditText editText1 = findViewById(R.id.TaskTitle);
         EditText editText2 = findViewById(R.id.taskDescription);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        teamId=sharedPreferences.getString("teamId",null);
+
         progressBar = findViewById(R.id.progress_task);
         //lap 31
         Spinner state = findViewById(R.id.stateSpinner);
-        teamId = sharedPreferences.getString("teamId","null");
 //        lap29
 //        EditText editText3=findViewById(R.id.editTextStat);
         Button button = findViewById(R.id.submitButtonTask);
@@ -74,32 +75,23 @@ public class AddTask extends AppCompatActivity {
                 .status(status)
                 .teamTaskId(teamId)
                 .build();
-
-
         Amplify.API.query(ModelMutation.create(task), res -> {
+
 runOnUiThread(new Runnable() {
     @Override
     public void run() {
         progressBar.setVisibility(View.INVISIBLE);
+
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
+        finish();
     }
 });
         }, err -> {
-
+            System.out.println(err.toString()+"faild to add task");
         });
     }
 
-    public void configureAmplify() {
-        try {
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.addPlugin(new AWSDataStorePlugin());
-            Amplify.configure(getApplicationContext());
 
-            Log.i(TAG, "Initialized Amplify");
-        } catch (AmplifyException e) {
-            Log.e(TAG, "Could not initialize Amplify", e);
-        }
-    }
 
 
 }

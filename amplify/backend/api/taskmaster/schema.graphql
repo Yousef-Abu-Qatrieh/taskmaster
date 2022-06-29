@@ -10,9 +10,14 @@ type Task @model {
 
 
 }
-
 type Team @model {
   id: ID!
   name: String!
   task:[Task] @hasMany
 }
+
+#type Team @model {
+#  id: ID!
+#  name: String!
+#  description: String
+#}
