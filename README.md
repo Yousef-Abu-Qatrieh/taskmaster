@@ -41,7 +41,8 @@ Publish TaskMaster build apk for your app
 ![](./screenshots/recycler%20in%20amplify.jpg)    
 ![](./screenshots/tasldetails.jpg)   
 
-Cognito
+Cognito 
+
 ![](./screenshots/login.jpg)   
 ![](./screenshots/sign%20up.jpg)
 ![](./screenshots/verification.jpg)   
