@@ -247,4 +247,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+
+    private static final int PICK_PDF_FILE = 2;
 }

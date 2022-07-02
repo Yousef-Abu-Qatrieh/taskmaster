@@ -3,12 +3,20 @@ package com.example.firsttry;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amplifyframework.datastore.generated.model.Task;
 import com.google.gson.Gson;
+
+import java.io.File;
 
 public class TaskDetails extends AppCompatActivity {
     TextView textView;
@@ -16,7 +24,7 @@ public class TaskDetails extends AppCompatActivity {
     TextView taskDescription;
     TextView taskStatus;
     Task task ;
-
+File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,55 @@ task=gson.fromJson(intent.getStringExtra("task"),Task.class
         textView.setText(task.getTitle());
         taskDescription.setText(task.getBody());
         taskStatus.setText(task.getStatus());
+
+
+    }
+    private void Fetch() {
+        loadingProgress.startLoading();
+
+        if (!file.exists()){
+            Amplify.Storage.downloadFile(
+                    "image"+taskId,
+                    file,
+                    result -> {
+                        convertFileToBitMab(file);
+                    },
+                    error -> {
+                        Toast.makeText(this, "No image for this task", Toast.LENGTH_SHORT).show();
+                    }
+            );
+        }
+
+        Amplify.API.query(
+                ModelQuery.get(Task.class, taskId),
+                response -> {
+                    t = response.getData();
+                    runOnUiThread(() -> {
+                        taskDetails.setText(t.getBody());
+                        taskDescription.setText("Stats : " + t.getState());
+                        setSupportActionBar(t.getTitle());
+                        if (file.exists()){
+                            convertFileToBitMab(file);
+                        }
+                        loadingProgress.stopLoading();
+                    });
+                },
+                error -> Log.e("MyAmplifyApp", error.toString(), error)
+        );
+
+
+
+
+
+    }
+
+
+    private void convertFileToBitMab(File file){
+        if (file!=null){
+            ImageView imageView =findViewById(R.id.image_view_task_details);
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+            imageView.setImageBitmap(bitmap);
+        }
 
 
     }

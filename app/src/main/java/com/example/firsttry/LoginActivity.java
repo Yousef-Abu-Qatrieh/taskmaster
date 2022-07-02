@@ -1,11 +1,12 @@
 package com.example.firsttry;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,25 +14,36 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.DevicesHandler;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.google.android.material.snackbar.Snackbar;
+
+import net.gg.myapplication.R;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login_activtity);
+        setContentView(R.layout.activity_login);
         configureAwsAmplify();
         functionalityForm();
+
 
     }
 
@@ -39,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText email = findViewById(R.id.edit_text_email);
         EditText password =findViewById(R.id.edit_text_password);
         SwitchCompat rememberMe =findViewById(R.id.remember_me);
-        ProgressBar progressBar =findViewById(R.id.progress_bar_Login);
+        ProgressBar  progressBar =findViewById(R.id.progress_bar_Login);
         Button login = findViewById(R.id.btn_login);
         TextView haveAccount = findViewById(R.id.text_view_dont_account);
 
@@ -48,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             System.out.println(password.getText().toString());
 
 
-
+            // TODO: 5/29/2022 I WILL handle remember me in future
 
             if (validation(email,password)){
                 progressBar.setVisibility(View.VISIBLE);
@@ -72,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         haveAccount.setOnClickListener(v ->{
-            startActivity(new Intent(getApplicationContext(),SignUpPage.class));
+            startActivity(new Intent(getApplicationContext(),SignUp.class));
             finish();
         });
 
@@ -89,9 +101,15 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    // for validation the form
+
+
+
     /// sum stuff to configure amplify
     void configureAwsAmplify() {
         try {
+            Amplify.addPlugin(new AWSS3StoragePlugin());
+
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSDataStorePlugin());
