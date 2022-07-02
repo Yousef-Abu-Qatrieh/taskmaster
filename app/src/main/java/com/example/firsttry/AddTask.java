@@ -85,6 +85,8 @@ public class AddTask extends AppCompatActivity {
         });
 
     }
+    }
+
 
     private void saveData(String status, String title, String description) {
         Task task = Task.builder()
@@ -204,4 +206,37 @@ runOnUiThread(new Runnable() {
             );
         }
     }
+        private void getIntentInflate() throws IOException {
+            Intent intent = getIntent();
+            Uri data = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (intent.getType()!=null&&  intent.getType().contains("image/") && data != null) {
+                configureAwsAmplify();
+                Uri iamgeUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                imageView.setImageURI(iamgeUri);
+                imageForUpload = convertUriToBimap(iamgeUri);
+                convertToFile();
+
+
+            }
+
+        }
+
+
+        /// sum stuff to configure amplify
+        void configureAwsAmplify() {
+            try {
+                Amplify.addPlugin(new AWSS3StoragePlugin());
+
+                Amplify.addPlugin(new AWSCognitoAuthPlugin());
+                Amplify.addPlugin(new AWSApiPlugin());
+                Amplify.addPlugin(new AWSDataStorePlugin());
+                Amplify.configure(getApplicationContext());
+
+            } catch (AmplifyException e) {
+//            Log.e("TAG", "Could not initialize Amplify", e);
+            }
+
+
+
+        }
 }
