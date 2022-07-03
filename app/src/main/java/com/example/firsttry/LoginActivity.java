@@ -44,7 +44,18 @@ public class LoginActivity extends AppCompatActivity {
         configureAwsAmplify();
         functionalityForm();
 
+        recordUserOpenApp();
 
+
+    }
+
+    private void recordUserOpenApp() {
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("OpenApp")
+                .addProperty("Successful", true)
+                .build();
+
+        Amplify.Analytics.recordEvent(event);
     }
 
     private void functionalityForm() {
@@ -112,6 +123,8 @@ public class LoginActivity extends AppCompatActivity {
 
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSPinpointAnalyticsPlugin(getApplication()));
+            Amplify.addPlugin(new AWSPredictionsPlugin());
             Amplify.addPlugin(new AWSDataStorePlugin());
             Amplify.configure(getApplicationContext());
 
@@ -119,6 +132,15 @@ public class LoginActivity extends AppCompatActivity {
 //            Log.e("TAG", "Could not initialize Amplify", e);
         }
 
+
+
     }
+
+
+
+
+
+
+
 
 }

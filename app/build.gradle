@@ -51,4 +51,7 @@ dependencies {
     implementation 'com.amplifyframework:aws-storage-s3:1.36.0'
     testImplementation 'junit:junit:'
     implementation 'com.github.dhaval2404:imagepicker:2.1'
+
+    implementation 'com.amplifyframework:aws-analytics-pinpoint:1.35.4'
+    implementation 'com.amplifyframework:aws-predictions:1.35.4'
 }
