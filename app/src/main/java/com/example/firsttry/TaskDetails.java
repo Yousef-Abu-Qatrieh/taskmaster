@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -17,6 +18,11 @@ import com.amplifyframework.datastore.generated.model.Task;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class TaskDetails extends AppCompatActivity {
     TextView textView;
@@ -51,6 +57,47 @@ task=gson.fromJson(intent.getStringExtra("task"),Task.class
 
 
     }
+    ImageView translate =findViewById(R.id.icon_Translate);
+        translate.setOnClickListener(v->{
+
+        if (!translated){
+            Amplify.Predictions.translateText(taskDetails.getText().toString(),
+                    result ->{
+                        translated=true;
+                        runOnUiThread(() -> {
+                            taskDetails.setText(result.getTranslatedText());
+                        });
+                    },
+                    error -> Log.e("MyAmplifyApp", "Translation failed", error)
+            );
+        }else {
+            taskDetails.setText(t.getBody());
+            translated=false;
+        }
+
+    });
+
+    private void playAudio(InputStream data) {
+
+        File mp3File = new File(getCacheDir(), "audio.mp3");
+
+        try (OutputStream out = new FileOutputStream(mp3File)) {
+            byte[] buffer = new byte[8 * 1_024];
+            int bytesRead;
+            while ((bytesRead = data.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+            mediaPlayer.reset();
+            mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+            mediaPlayer.setDataSource(new FileInputStream(mp3File).getFD());
+            mediaPlayer.prepareAsync();
+        } catch (IOException error) {
+            Log.e("MyAmplifyApp", "Error writing audio file", error);
+        }
+    }
+
+
+
     private void Fetch() {
         loadingProgress.startLoading();
 
@@ -72,7 +119,7 @@ task=gson.fromJson(intent.getStringExtra("task"),Task.class
                 response -> {
                     t = response.getData();
                     runOnUiThread(() -> {
-                        taskDetails.setText(t.getBody());
+                        taskStatus.setText(t.getBody());
                         taskDescription.setText("Stats : " + t.getState());
                         setSupportActionBar(t.getTitle());
                         if (file.exists()){

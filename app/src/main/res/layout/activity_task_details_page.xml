@@ -59,4 +59,26 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="475dp" />
 
+
+    <ImageView
+        android:id="@+id/icon_hearing"
+        android:layout_width="37dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="68dp"
+        android:src="@drawable/ic_hearing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.674"
+        app:layout_constraintStart_toEndOf="@id/text_view_descreption"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_task_details_page" />
+    <ImageView
+        android:id="@+id/icon_Translate"
+        android:layout_width="37dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="68dp"
+        android:src="@drawable/ic_translate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.674"
+        app:layout_constraintStart_toEndOf="@id/icon_Translate"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_task_details_page" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
