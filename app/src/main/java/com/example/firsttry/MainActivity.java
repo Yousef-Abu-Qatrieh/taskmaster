@@ -20,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.analytics.AnalyticsEvent;
+import com.amplifyframework.analytics.pinpoint.AWSPinpointAnalyticsPlugin;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
@@ -27,6 +29,7 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.amplifyframework.predictions.aws.AWSPredictionsPlugin;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -51,10 +54,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initialiseActivity();
-        configureAmplify();
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         teamId=sharedPreferences.getString("teamId",null);
         getTeameName();
+        recordAnalistic();
         // get the recycler view object
         //lap29
 
@@ -121,6 +125,17 @@ public class MainActivity extends AppCompatActivity {
 //        codeButton=findViewById(R.id.buttonTask2);
 //        workoutButton=findViewById(R.id.buttonTask3);
 //        navigateToTaskDetailPage();
+
+    }
+
+    private void recordAnalistic() {
+        AnalyticsEvent event = AnalyticsEvent.builder()
+                .name("openMainActivity")
+
+                .addProperty("IsOpen", true)
+
+                .build();
+
 
     }
 
@@ -218,17 +233,7 @@ public class MainActivity extends AppCompatActivity {
         Intent goSettingIntent = new Intent(this ,SettingPage.class);
         startActivity(goSettingIntent);
     }
-    private void configureAmplify() {
-        try {
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.addPlugin(new AWSDataStorePlugin());
-            Amplify.configure(getApplicationContext());
 
-            Log.i(TAG, "Initialized Amplify");
-        } catch (AmplifyException e) {
-            Log.e(TAG, "Could not initialize Amplify", e);
-        }
-    }
     public void fetchData(){
         taskAws.clear();
         Amplify.API.query(ModelQuery.list(Task.class,Task.TEAM_TASK_ID.eq(teamId)),res->{
