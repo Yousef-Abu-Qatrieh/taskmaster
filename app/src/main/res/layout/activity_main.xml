@@ -5,30 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <ProgressBar
         android:id="@+id/progress_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="invisible">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </ProgressBar>
 
-<!--    lap28-->
+    <!--    lap28-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="300dp"
+
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/addBtn"
@@ -42,86 +43,50 @@
         app:layout_constraintVertical_bias="0.976" />
 
 
-    <!--lap 27-->
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="311dp"-->
-<!--        android:layout_height="296dp"-->
-<!--        android:layout_marginStart="61dp"-->
-<!--        android:layout_marginTop="229dp"-->
-<!--        android:layout_marginEnd="61dp"-->
-<!--        android:layout_marginBottom="261dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.428"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/myTaskTitle"-->
-<!--        app:layout_constraintVertical_bias="1.0"-->
-<!--        app:srcCompat="@android:drawable/ic_menu_gallery" />-->
-    <!--lap26-->
-    <!--    <Button-->
-    <!--        android:id="@+id/addSingleTask"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="40dp"-->
-    <!--        android:layout_marginBottom="156dp"-->
-    <!--        android:text="@string/add_taskMainButton"-->
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/recycler_view"></com.google.android.gms.ads.AdView>
 
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/textView2"-->
-    <!--        app:layout_constraintVertical_bias="1.0" />-->
+    <Button
+        android:id="@+id/initialisAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AdMob Rewarded Ads"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view"
+        app:layout_constraintVertical_bias="0.906" />
 
-<!--lap27-->
-<!--    <TextView-->
-<!--        android:id="@+id/myTaskTitle"-->
-<!--        android:layout_width="355dp"-->
-<!--        android:layout_height="45dp"-->
-<!--        android:layout_marginStart="44dp"-->
-<!--        android:layout_marginTop="80dp"-->
-<!--        android:text="@string/my_tasksMain"-->
-<!--        android:textSize="20dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-    <!--lap26-->
-    <!--    <Button-->
-    <!--        android:id="@+id/allTasksButton"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="56dp"-->
-    <!--        android:layout_marginEnd="20dp"-->
-    <!--        android:text="@string/all_taskMainButton"-->
-    <!--        app:layout_constraintEnd_toEndOf="@+id/imageView"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
-<!--lap27-->
-<!--    <Button-->
-<!--        android:id="@+id/buttonTask1"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:text="@string/buttonTask1Study"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
+    <Button
+        android:id="@+id/RewardAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AdMob Interstitial Ads"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recycler_view"
+        app:layout_constraintVertical_bias="0.836" />
 
-<!--    <Button-->
-<!--        android:id="@+id/buttonTask2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="160dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:text="@string/buttonTask2Code"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/buttonTask3"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="272dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:text="@string/buttonTask3Workout"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView" />-->
+    <TextView
+        android:id="@+id/text_view_reward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:text="Coins"
+        app:layout_constraintBottom_toTopOf="@+id/RewardAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
