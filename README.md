@@ -47,3 +47,7 @@ Cognito
 ![](./screenshots/login.jpg)   
 ![](./screenshots/sign%20up.jpg)
 ![](./screenshots/verification.jpg)   
+
+NewIntent
+![](./screenshots/ImageShare.jpg)
+![](./screenshots/TaskAddImage.jpg)
