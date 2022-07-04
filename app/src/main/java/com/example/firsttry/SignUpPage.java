@@ -17,8 +17,7 @@ import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
 import com.google.android.material.snackbar.Snackbar;
 
-
-public class SignUp extends AppCompatActivity {
+public class SignUpPage extends AppCompatActivity {
 
     ProgressBar progressBar ;
     Intent intent;
@@ -28,7 +27,7 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_sign_up_page);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = sharedPreferences.edit();
         progressBar =(ProgressBar) findViewById(R.id.s_progress_bar);
@@ -71,7 +70,6 @@ public class SignUp extends AppCompatActivity {
                     intent.putExtra("email",email.getText().toString());
                     saveUserName(userName.getText().toString());
                     startActivity(intent);
-                    finish();
 
 
                 },
@@ -110,4 +108,5 @@ public class SignUp extends AppCompatActivity {
             return false;
         }
         return true;
-    }}
+    }
+}
